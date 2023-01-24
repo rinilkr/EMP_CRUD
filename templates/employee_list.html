@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- <div class="jumbotron border shadow"> -->
+    <!-- <div class="row">
+        <div class="col-md-6 offset-6">
+            <form>
+                <div class="input-group">
+                    <input name="q" type="text" placeholder="Search" class="form-control form-control-lg" />
+                    <div class="input-group-append">
+                        <button class="btn btn-dark btn-lg">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>  -->
+
+<table class="table table-borderless" id ="table_id">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Age</td>
+            <td>Department</td>
+            <td>Location</td>
+            <td>
+                <a href="{% url 'employee_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employee_list %}
+        <tr>
+            <td>{{employee.Name}}</td>
+            <td>{{employee.Email}}</td>
+            <td>{{employee.Age}}</td>
+            <td>{{employee.Department}}</td>
+            <td>{{employee.Location}}</td>
+            <td>
+                <a href="{% url 'employee_update' employee.id %}" class="btn text-secondary px-0">
+                    <i class="far fa-edit fa-lg  dropdown-item"></i>
+                </a>
+                <!-- Button HTML (to Trigger Modal) -->
+	            <!-- <a href="{% url 'employee_delete' employee.id %}" class="trigger-btn d-inline" data-toggle="modal" onsubmit="return #myModal"> -->
+                <!-- <a href="{% url 'employee_delete' employee.id %}" method="post" class="d-inline" onsubmit="return confirm('Confirm Deletion! ')"> -->
+                    <!-- {% csrf_token %} -->
+                    <!-- <button type="submit" class="btn"> -->
+                        <!-- <i class="far fa-trash-alt fa-lg text-danger float-right"></i> -->
+                    <!-- </button> -->
+                <!-- </a> -->
+                <a href="{% url 'employee_delete' employee.id %}"
+                   
+                    data-toggle="modal"
+                    data-target="#delete-item-modal"
+                    id="delete-item"
+                    >
+                    <i class="far fa-trash-alt fa-lg text-danger dropdown-item d-inline "></i>
+                    </a>
+                <!-- Modal HTML -->
+                <div class="modal fade" id="delete-item-modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>Are you sure, You want to remove this item?</p>
+                            </div>
+                            <div class="justify-content-between mb-2 mr-2 text-right">
+                                <form method="post"
+                                      id="item-delete-form"
+                                >
+                                    <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">Cancel</button>
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" id="confirm-delete-item-button">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %} 
